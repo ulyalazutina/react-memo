@@ -133,10 +133,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       return false;
     });
     if (isEasyMode) {
-      if (attempts === 0) {
+      if (openCardsWithoutPair.length === 2 && attempts === 1) {
+        setAttempts(prevValue => prevValue - 1);
         finishGame(STATUS_LOST);
-      }
-      if (openCardsWithoutPair.length === 2) {
+      } else if (openCardsWithoutPair.length === 2) {
         setAttempts(prevValue => prevValue - 1);
         setTimeout(() => {
           setCards(

@@ -227,7 +227,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         ))}
       </div>
-      {isEasyMode && <div>Включен легкий режим</div>}
+      {isEasyMode && (
+        <div className={styles.modeContainer}>
+          <div className={styles.modeText}>Включен легкий режим</div>
+          <div className={styles.modeText}>Осталось {attempts} попытки</div>
+        </div>
+      )}
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal

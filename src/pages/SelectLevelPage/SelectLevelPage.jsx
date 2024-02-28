@@ -4,10 +4,13 @@ import { Checkbox } from "../../components/Checkbox/Checkbox";
 import useMode from "../../hooks/useMode";
 
 export function SelectLevelPage() {
-  const { setIsEasyMode } = useMode();
+  const { setIsEasyMode, isEasyMode } = useMode();
   function handleCheckboxClick() {
     setIsEasyMode(prevValue => !prevValue);
   }
+  const handleCheckboxChange = e => {
+    setIsEasyMode(e.target.checked);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -34,6 +37,8 @@ export function SelectLevelPage() {
           name="easy-mode"
           label="Включить легкий режим"
           onClick={handleCheckboxClick}
+          onChange={handleCheckboxChange}
+          checked={isEasyMode}
         ></Checkbox>
       </div>
     </div>

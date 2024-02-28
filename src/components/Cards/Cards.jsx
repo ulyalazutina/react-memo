@@ -80,6 +80,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
   }
+  function navigateHome() {
+    navigate("/");
+  }
 
   /**
    * Обработка основного действия в игре - открытие карты.
@@ -242,7 +245,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
-            onClick={navigate("/")}
+            onClick={navigateHome}
           />
         </div>
       ) : null}

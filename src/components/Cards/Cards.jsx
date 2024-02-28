@@ -5,6 +5,7 @@ import styles from "./Cards.module.css";
 import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
+import useMode from "../../hooks/useMode";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -41,6 +42,8 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+  const { isEasyMode } = useMode();
+  const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -122,7 +125,22 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
       return false;
     });
-
+    if (isEasyMode) {
+      if (attempts === 0) {
+        finishGame(STATUS_LOST);
+      }
+      if (openCardsWithoutPair.length === 2) {
+        setAttempts(prevValue => prevValue - 1);
+        setTimeout(() => {
+          setCards(
+            cards.map(card => {
+              return openCardsWithoutPair.includes(card) ? { ...card, open: false } : card;
+            }),
+          );
+        }, 1000);
+      }
+      return;
+    }
     const playerLost = openCardsWithoutPair.length >= 2;
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
@@ -209,7 +227,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         ))}
       </div>
-
+      {isEasyMode && <div>Включен легкий режим</div>}
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal

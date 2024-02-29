@@ -78,3 +78,7 @@
 .leaderboardLink:hover {
   color: rgb(10, 113, 193);
 }
+
+.leaderboardLink:visited {
+  color: #0080c1;
+}

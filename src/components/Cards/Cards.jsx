@@ -7,7 +7,7 @@ import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import useMode from "../../hooks/useMode";
 import { useNavigate } from "react-router-dom";
-// import useLeaders from "../../hooks/useLeaders";
+import useLeaders from "../../hooks/useLeaders";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -53,8 +53,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [cards, setCards] = useState([]);
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
+  const { leadersData } = useLeaders();
 
-  let isLeader = !isEasyMode && pairsCount === 3 && status === STATUS_WON;
+  const [isLeader, setIsLeader] = useState(false);
 
   // Дата начала игры
   const [gameStartDate, setGameStartDate] = useState(null);
@@ -84,6 +85,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
     setAttempts(isEasyMode ? 3 : 1);
+    setIsLeader(false);
   }
   function navigateHome() {
     navigate("/");
@@ -118,9 +120,18 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     const isPlayerWon = nextCards.every(card => card.open);
 
     // Победа - все карты на поле открыты
-    if (isPlayerWon) {
+    if (isPlayerWon && !isEasyMode && pairsCount === 3) {
+      const timeLastLeader = leadersData[leadersData.length - 1].time;
+      const timeWin = timer.minutes * 60 + timer.seconds;
+      if (timeWin >= timeLastLeader) {
+        setIsLeader(false);
+      } else {
+        setIsLeader(true);
+      }
       finishGame(STATUS_WON);
-      console.log(isLeader);
+      return;
+    } else if (isPlayerWon) {
+      finishGame(STATUS_WON);
       return;
     }
 

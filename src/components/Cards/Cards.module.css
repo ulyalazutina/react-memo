@@ -50,6 +50,7 @@
   margin-top: 34px;
   margin-bottom: 10px;
 }
+
 .previewDescription {
   font-size: 18px;
   line-height: 18px;
@@ -69,4 +70,20 @@
   line-height: 32px;
 
   margin-bottom: -12px;
+}
+
+.modeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.modeText {
+  font-size: 18px;
+  line-height: 18px;
+  color: #fff;
+  font-family: StratosSkyeng;
+  font-weight: 400;
+
 }

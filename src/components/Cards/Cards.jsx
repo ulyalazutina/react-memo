@@ -5,6 +5,8 @@ import styles from "./Cards.module.css";
 import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
+import useMode from "../../hooks/useMode";
+import { useNavigate } from "react-router-dom";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -41,6 +43,10 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+  const { isEasyMode } = useMode();
+  const [attempts, setAttempts] = useState(isEasyMode ? 3 : 1);
+  let navigate = useNavigate();
+
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -73,6 +79,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
+    setAttempts(isEasyMode ? 3 : 1);
+  }
+  function navigateHome() {
+    navigate("/");
   }
 
   /**
@@ -122,7 +132,22 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
       return false;
     });
-
+    if (isEasyMode) {
+      if (openCardsWithoutPair.length === 2 && attempts === 1) {
+        setAttempts(prevValue => prevValue - 1);
+        finishGame(STATUS_LOST);
+      } else if (openCardsWithoutPair.length === 2) {
+        setAttempts(prevValue => prevValue - 1);
+        setTimeout(() => {
+          setCards(
+            cards.map(card => {
+              return openCardsWithoutPair.includes(card) ? { ...card, open: false } : card;
+            }),
+          );
+        }, 1000);
+      }
+      return;
+    }
     const playerLost = openCardsWithoutPair.length >= 2;
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
@@ -209,14 +234,19 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         ))}
       </div>
-
+      {isEasyMode && (
+        <div className={styles.modeContainer}>
+          <div className={styles.modeText}>Включен легкий режим</div>
+          <div className={styles.modeText}>Осталось {attempts} попытки</div>
+        </div>
+      )}
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
-            onClick={resetGame}
+            onClick={navigateHome}
           />
         </div>
       ) : null}

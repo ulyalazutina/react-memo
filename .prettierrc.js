@@ -7,4 +7,6 @@ module.exports = {
   bracketSpacing: true,
   arrowParens: "avoid",
   htmlWhitespaceSensitivity: "ignore",
+  singleQuote: false,
+  endOfLine: "auto"
 };

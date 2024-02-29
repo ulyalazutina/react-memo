@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
+import { Checkbox } from "../../components/Checkbox/Checkbox";
+import useMode from "../../hooks/useMode";
 
 export function SelectLevelPage() {
+  const { setIsEasyMode, isEasyMode } = useMode();
+  function handleCheckboxClick() {
+    setIsEasyMode(prevValue => !prevValue);
+  }
+  const handleCheckboxChange = e => {
+    setIsEasyMode(e.target.checked);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -23,6 +32,14 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
+        <Checkbox
+          id="easy-mode"
+          name="easy-mode"
+          label="Включить легкий режим"
+          onClick={handleCheckboxClick}
+          onChange={handleCheckboxChange}
+          checked={isEasyMode}
+        ></Checkbox>
       </div>
     </div>
   );

@@ -62,3 +62,19 @@
 .levelLink:visited {
   color: #0080c1;
 }
+
+.leaderboardLink {
+  color: rgb(0, 73, 128);
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0%;
+  text-align: left;
+  text-decoration-line: underline;
+  margin-top: 18px;
+}
+
+.leaderboardLink:hover {
+  color: rgb(10, 113, 193);
+}

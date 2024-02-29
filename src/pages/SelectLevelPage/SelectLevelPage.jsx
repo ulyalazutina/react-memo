@@ -40,6 +40,9 @@ export function SelectLevelPage() {
           onChange={handleCheckboxChange}
           checked={isEasyMode}
         ></Checkbox>
+        <Link className={styles.leaderboardLink} to={"/leaderboard"}>
+          Перейти к лидерборду
+        </Link>
       </div>
     </div>
   );

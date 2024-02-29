@@ -1,25 +1,26 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Button } from "../../components/Button/Button";
 import styles from "./Leaderboard.module.css";
-import { getList } from "../../api";
+// import { getList } from "../../api";
 import useLeaders from "../../hooks/useLeaders";
 import { Leader } from "../../components/Leader/Leader";
+import { useNavigate } from "react-router-dom";
 
 export function Leaderboard() {
-  const { leadersData, setLeadersData } = useLeaders();
+  const { leadersData } = useLeaders();
+  let navigate = useNavigate();
 
-  useEffect(() => {
-    getList().then(data => {
-      setLeadersData(data.leaders);
-    });
-  }, []);
+  const navigateToHome = () => {
+    navigate("/");
+  };
+  const leaders = leadersData.sort((a, b) => a.time - b.time);
   // console.log(leadersData);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>Лидерборд</h2>
-        <Button>Начать игру</Button>
+        <Button onClick={navigateToHome}>Начать игру</Button>
       </div>
       <table className={styles.table}>
         <thead className={styles.thead}>
@@ -29,7 +30,7 @@ export function Leaderboard() {
             <th className={styles.th}>Время</th>
           </tr>
         </thead>
-        {leadersData.map((item, index) => (
+        {leaders.map((item, index) => (
           <Leader key={index} id={item.id} name={item.name} time={item.time} />
         ))}
       </table>

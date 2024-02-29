@@ -7,3 +7,15 @@ export async function getList() {
   const data = response.json();
   return data;
 }
+
+export async function addLeader({ name, time }) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      time,
+    }),
+  });
+  const data = response.json();
+  return data;
+}

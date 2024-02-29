@@ -7,6 +7,7 @@ import celebrationImageUrl from "./images/celebration.png";
 import { useState } from "react";
 import { addLeader } from "../../api";
 import { useNavigate } from "react-router-dom";
+import useLeaders from "../../hooks/useLeaders";
 // import { addLeader } from "../../api";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
@@ -26,13 +27,20 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   };
 
   const [nameData, setNameData] = useState(isWonForm);
+  const { listError, setListError } = useLeaders();
 
   let navigate = useNavigate();
 
   const addLeaderInList = () => {
-    addLeader(nameData).then(() => {
-      navigate("/leaderboard");
-    });
+    addLeader(nameData)
+      .then(() => {
+        navigate("/leaderboard");
+      })
+      .catch(error => {
+        if (error.message === "Failed to fetch") {
+          setListError("Ошибка сервера. Попробуйте зайти позже");
+        }
+      });
   };
 
   const handleInputChange = e => {
@@ -47,6 +55,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
   return (
     <div className={styles.modal}>
+      {listError ? <p className={styles.errorMsg}>{listError}</p> : null}
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <h2 className={styles.title}>{title}</h2>
       {inputName ? (

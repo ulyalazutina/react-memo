@@ -4,6 +4,11 @@ export async function getList() {
   const response = await fetch(API_URL, {
     method: "GET",
   });
+
+  if (response === "Failed to fetch") {
+    throw new Error("Ошибка сервера");
+  }
+
   const data = response.json();
   return data;
 }
@@ -16,6 +21,10 @@ export async function addLeader({ name, time }) {
       time,
     }),
   });
+
+  if (response.status === 400) {
+    throw new Error("Ошибка сервера");
+  }
   const data = response.json();
   return data;
 }

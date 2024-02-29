@@ -60,3 +60,11 @@
     border: 0;
     border-radius: 0 12px 12px 0;
 }
+
+.errorMsg {
+    color: rgb(255, 35, 35);
+    font-family: Poppins;
+    text-align: center;
+    font-size: 32px;
+    margin-top: 30px;
+}

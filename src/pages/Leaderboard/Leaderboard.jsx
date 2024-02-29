@@ -7,7 +7,7 @@ import { Leader } from "../../components/Leader/Leader";
 import { useNavigate } from "react-router-dom";
 
 export function Leaderboard() {
-  const { leadersData } = useLeaders();
+  const { leadersData, listError } = useLeaders();
   let navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -34,6 +34,7 @@ export function Leaderboard() {
           <Leader key={index} id={item.id} name={item.name} time={item.time} />
         ))}
       </table>
+      {listError ? <p className={styles.errorMsg}>{listError}</p> : null}
     </div>
   );
 }

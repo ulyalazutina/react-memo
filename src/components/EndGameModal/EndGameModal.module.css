@@ -70,3 +70,11 @@
   letter-spacing: 0%;
   text-align: center;
 }
+
+.errorMsg {
+  color: rgb(255, 35, 35);
+  font-family: Poppins;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 30px;
+}

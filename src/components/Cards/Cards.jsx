@@ -236,7 +236,27 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        {status === STATUS_IN_PROGRESS ? (
+          <>
+            <div className={styles.achivki_wrap}>
+              <button type="button" className={styles.achivki_btn}>
+                <div className={styles.hint_wrap}>
+                  <h6 className={styles.hint_title}>Прозрение</h6>
+                  <p className={styles.hint_text}>
+                    На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                  </p>
+                </div>
+              </button>
+              <button type="button" className={styles.achivki_btn}>
+                <div className={styles.hint_wrap}>
+                  <h6 className={styles.hint_title}>Алохомора</h6>
+                  <p className={styles.hint_text}>Открывается случайная пара карт.</p>
+                </div>
+              </button>
+            </div>
+            <Button onClick={resetGame}>Начать заново</Button>
+          </>
+        ) : null}
       </div>
 
       <div className={styles.cards}>

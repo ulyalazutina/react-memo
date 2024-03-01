@@ -6,6 +6,7 @@ export function Leader({ id, name, time }) {
       <tr className={styles.tr}>
         <td className={styles.td}>{id}</td>
         <td className={styles.td}>{name}</td>
+        <td className={styles.td}>{name}</td>
         <td className={styles.td}>{time}</td>
       </tr>
     </tbody>

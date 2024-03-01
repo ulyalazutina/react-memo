@@ -27,8 +27,7 @@
     display: grid;
     border-collapse: collapse;
     min-width: 100%;
-    grid-template-columns:
-        minmax(150px, 1fr) minmax(150px, 3.33fr) minmax(114px, 1fr);
+    grid-template-columns: minmax(136px, 1fr) minmax(194px, 3.33fr) minmax(150px, 3fr) minmax(113px, 1fr);
 }
 
 .thead, .tr {

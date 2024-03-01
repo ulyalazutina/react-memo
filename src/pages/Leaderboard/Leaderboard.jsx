@@ -27,6 +27,7 @@ export function Leaderboard() {
           <tr className={styles.tr}>
             <th className={styles.th}>Позиция</th>
             <th className={styles.th}>Имя</th>
+            <th className={styles.th}>Достижения</th>
             <th className={styles.th}>Время</th>
           </tr>
         </thead>

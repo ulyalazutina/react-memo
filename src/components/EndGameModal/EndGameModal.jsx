@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import useLeaders from "../../hooks/useLeaders";
 // import { addLeader } from "../../api";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader, onEpiphany }) {
   const title = isWon && isLeader ? "Вы попали на Лидерборд!" : isWon ? "Вы победили!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
@@ -20,14 +20,30 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const isWonTime = gameDurationMinutes * 60 + gameDurationSeconds;
 
   const inputName = isWon && isLeader;
+  const achievementsArr = [];
+
+  if (isLeader && !onEpiphany) {
+    achievementsArr.push(1, 2);
+  }
+  if (achievementsArr.length === 0) {
+    if (isLeader) {
+      achievementsArr.push(1);
+    }
+    if (!onEpiphany) {
+      achievementsArr.push(2);
+    }
+  }
 
   const isWonForm = {
     name: "Пользователь",
     time: isWonTime,
+    achievements: achievementsArr,
   };
 
   const [nameData, setNameData] = useState(isWonForm);
   const { listError, setListError } = useLeaders();
+
+  console.log(nameData);
 
   let navigate = useNavigate();
 

@@ -27,3 +27,7 @@
 .td:first-child {
     border-radius: 12px 0 0 12px;
 }
+
+.achievements_icon {
+    margin-right: 15px;
+}

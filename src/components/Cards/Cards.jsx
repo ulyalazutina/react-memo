@@ -72,7 +72,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   });
 
   // отслеживает была ли нажата суперсила прозрение
-  const [onEpiphany, setOnEpiphany] = useState(true);
+  const [onEpiphany, setOnEpiphany] = useState(false);
 
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
@@ -84,6 +84,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
+    setOnEpiphany(false);
   }
   function resetGame() {
     setGameStartDate(null);
@@ -92,6 +93,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
     setAttempts(isEasyMode ? 3 : 1);
     setIsLeader(false);
+    setOnEpiphany(false);
   }
   function navigateHome() {
     navigate("/");
@@ -235,7 +237,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     }, 2000);
     clearTimeout();
 
-    setOnEpiphany(false);
+    setOnEpiphany(true);
   }
 
   return (
@@ -265,7 +267,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           <>
             <div className={styles.superpower}>
               <button
-                disabled={onEpiphany ? false : true}
+                disabled={onEpiphany ? true : false}
                 className={styles.superpowerEpiphany_btn}
                 type="button"
                 onClick={workEpiphany}

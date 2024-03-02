@@ -56,8 +56,7 @@ ol {
 
 @font-face {
   font-family: "Inter";
-  src:
-    url("../public/assets/fonts/Inter-Bold.ttf") format("ttf");
+  src: url("../public/assets/fonts/Inter-Bold.ttf") format("ttf");
   font-weight: 700;
   font-style: bold;
 }

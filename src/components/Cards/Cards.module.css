@@ -85,7 +85,6 @@
   color: #fff;
   font-family: StratosSkyeng;
   font-weight: 400;
-
 }
 
 .superpower {
@@ -95,7 +94,7 @@
 }
 
 .superpowerEpiphany_btn {
-  background-image: url('images/achiv_prozrenie.svg');
+  background-image: url("images/achiv_prozrenie.svg");
   width: 70px;
   height: 68px;
   background-repeat: no-repeat;
@@ -126,7 +125,6 @@
   width: 160px;
 }
 
-
 .hintOne_title {
   color: rgb(0, 73, 128);
   font-family: Inter;
@@ -153,7 +151,7 @@
 } */
 
 .superpowerAlohomora_btn {
-  background-image: url('images/achiv_aho.svg');
+  background-image: url("images/achiv_aho.svg");
   width: 70px;
   height: 68px;
   background-repeat: no-repeat;

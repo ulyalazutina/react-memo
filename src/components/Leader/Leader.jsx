@@ -31,14 +31,14 @@ export function Leader({ id, name, time, achievements }) {
                   gradientUnits="userSpaceOnUse"
                   gradientTransform="translate(12.654 -7.18504) scale(27.084 26.5541)"
                 >
-                  <stop offset="0.508" stop-color="#B7D118" />
-                  <stop offset="0.572" stop-color="#B2D019" />
-                  <stop offset="0.643" stop-color="#A5CD1D" />
-                  <stop offset="0.717" stop-color="#8FC922" />
-                  <stop offset="0.793" stop-color="#70C22A" />
-                  <stop offset="0.871" stop-color="#48BA34" />
-                  <stop offset="0.949" stop-color="#18B040" />
-                  <stop offset="0.981" stop-color="#02AB46" />
+                  <stop offset="0.508" stopColor="#B7D118" />
+                  <stop offset="0.572" stopColor="#B2D019" />
+                  <stop offset="0.643" stopColor="#A5CD1D" />
+                  <stop offset="0.717" stopColor="#8FC922" />
+                  <stop offset="0.793" stopColor="#70C22A" />
+                  <stop offset="0.871" stopColor="#48BA34" />
+                  <stop offset="0.949" stopColor="#18B040" />
+                  <stop offset="0.981" stopColor="#02AB46" />
                 </radialGradient>
               </defs>
             </svg>
@@ -65,9 +65,9 @@ export function Leader({ id, name, time, achievements }) {
                   width="26"
                   height="27"
                   filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB"
+                  colorInterpolationFilters="sRGB"
                 >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
                   <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                   <feColorMatrix
                     in="SourceAlpha"
@@ -110,8 +110,8 @@ export function Leader({ id, name, time, achievements }) {
                   y2="27.061"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#FFB500" />
-                  <stop offset="1" stop-color="#FFE052" />
+                  <stop stopColor="#FFB500" />
+                  <stop offset="1" stopColor="#FFE052" />
                 </linearGradient>
                 <radialGradient
                   id="paint1_radial_201_75"
@@ -121,8 +121,8 @@ export function Leader({ id, name, time, achievements }) {
                   gradientUnits="userSpaceOnUse"
                   gradientTransform="translate(10.8536 21.6406) rotate(90) scale(16.0758 16.1156)"
                 >
-                  <stop offset="0.015625" stop-color="#7F12F4" />
-                  <stop offset="1" stop-color="#E0C5FF" />
+                  <stop offset="0.015625" stopColor="#7F12F4" />
+                  <stop offset="1" stopColor="#E0C5FF" />
                 </radialGradient>
               </defs>
             </svg>
@@ -155,9 +155,9 @@ export function Leader({ id, name, time, achievements }) {
                   width="21.6641"
                   height="8.59647"
                   filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB"
+                  colorInterpolationFilters="sRGB"
                 >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
                   <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                   <feColorMatrix
                     in="SourceAlpha"
@@ -178,9 +178,9 @@ export function Leader({ id, name, time, achievements }) {
                   width="21.7026"
                   height="22.6488"
                   filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB"
+                  colorInterpolationFilters="sRGB"
                 >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
                   <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                   <feColorMatrix
                     in="SourceAlpha"

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import useLeaders from "../../hooks/useLeaders";
 // import { addLeader } from "../../api";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader, onEpiphany }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader, onSuperPower }) {
   const title = isWon && isLeader ? "Вы попали на Лидерборд!" : isWon ? "Вы победили!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
@@ -22,14 +22,14 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const inputName = isWon && isLeader;
   const achievementsArr = [];
 
-  if (isLeader && !onEpiphany) {
+  if (isLeader && !onSuperPower) {
     achievementsArr.push(1, 2);
   }
   if (achievementsArr.length === 0) {
     if (isLeader) {
       achievementsArr.push(1);
     }
-    if (!onEpiphany) {
+    if (!onSuperPower) {
       achievementsArr.push(2);
     }
   }

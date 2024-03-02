@@ -71,7 +71,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     minutes: 0,
   });
 
-  // отслеживает была ли нажата суперсила прозрение
+  // была ли нажата суперсила, для ачивки на лидерборде
+  const [onSuperPower, setOnSuperPower] = useState(false);
+  // были ли нажаты суперсилы для деактивации кнопки
+  const [onAlohomora, setOnAlohomora] = useState(false);
   const [onEpiphany, setOnEpiphany] = useState(false);
 
   function finishGame(status = STATUS_LOST) {
@@ -84,7 +87,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
-    setOnEpiphany(false);
+    setOnSuperPower(false);
   }
   function resetGame() {
     setGameStartDate(null);
@@ -93,7 +96,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
     setAttempts(isEasyMode ? 3 : 1);
     setIsLeader(false);
+    setOnSuperPower(false);
     setOnEpiphany(false);
+    setOnAlohomora(false);
   }
   function navigateHome() {
     navigate("/");
@@ -236,8 +241,21 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       setGameStartDate(newDate);
     }, 2000);
     clearTimeout();
-
     setOnEpiphany(true);
+    setOnSuperPower(true);
+  }
+
+  function workAlohomora() {
+    const closeCards = cards.filter(card => !card.open);
+    const randomIndex = Math.floor(Math.random() * closeCards.length);
+    const randomCloseCard = closeCards[randomIndex];
+    setCards(
+      cards.map(card =>
+        randomCloseCard.rank === card.rank && randomCloseCard.suit === card.suit ? { ...card, open: true } : card,
+      ),
+    );
+    setOnSuperPower(true);
+    setOnAlohomora(true);
   }
 
   return (
@@ -279,7 +297,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                   </p>
                 </div>
               </button>
-              <button type="button" className={styles.superpowerAlohomora_btn} disabled>
+              <button
+                onClick={workAlohomora}
+                type="button"
+                className={styles.superpowerAlohomora_btn}
+                disabled={onAlohomora ? true : false}
+              >
                 <div className={styles.hintTwo_wrap}>
                   <h6 className={styles.hintTwo_title}>Алохомора</h6>
                   <p className={styles.hintTwo_text}>Открывается случайная пара карт.</p>
@@ -316,7 +339,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationMinutes={timer.minutes}
             onClick={navigateHome}
             isLeader={isLeader}
-            onEpiphany={onEpiphany}
+            onSuperPower={onSuperPower}
           />
         </div>
       ) : null}

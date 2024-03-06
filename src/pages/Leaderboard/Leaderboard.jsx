@@ -14,7 +14,7 @@ export function Leaderboard() {
     navigate("/");
   };
   const leaders = leadersData.sort((a, b) => a.time - b.time);
-  // console.log(leadersData);
+  // console.log(leaders);
 
   return (
     <div className={styles.container}>
@@ -27,11 +27,12 @@ export function Leaderboard() {
           <tr className={styles.tr}>
             <th className={styles.th}>Позиция</th>
             <th className={styles.th}>Имя</th>
+            <th className={styles.th}>Достижения</th>
             <th className={styles.th}>Время</th>
           </tr>
         </thead>
         {leaders.map((item, index) => (
-          <Leader key={index} id={item.id} name={item.name} time={item.time} />
+          <Leader key={index} id={item.id} name={item.name} achievements={item.achievements} time={item.time} />
         ))}
       </table>
       {listError ? <p className={styles.errorMsg}>{listError}</p> : null}

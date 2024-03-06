@@ -8,5 +8,5 @@ module.exports = {
   arrowParens: "avoid",
   htmlWhitespaceSensitivity: "ignore",
   singleQuote: false,
-  endOfLine: "auto"
+  endOfLine: "auto",
 };

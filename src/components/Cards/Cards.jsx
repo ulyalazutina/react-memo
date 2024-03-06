@@ -17,6 +17,8 @@ const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 const STATUS_PREVIEW = "STATUS_PREVIEW";
 
+const STATUS_PAUSE = "STATUS_PAUSE";
+
 function getTimerValue(startDate, endDate) {
   if (!startDate && !endDate) {
     return {
@@ -61,12 +63,19 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
+  const [gamePauseDate, setGamePauseDate] = useState(false);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
     seconds: 0,
     minutes: 0,
   });
+
+  // была ли нажата суперсила, для ачивки на лидерборде
+  const [onSuperPower, setOnSuperPower] = useState(false);
+  // были ли нажаты суперсилы для деактивации кнопки
+  const [onAlohomora, setOnAlohomora] = useState(false);
+  const [onEpiphany, setOnEpiphany] = useState(false);
 
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
@@ -78,6 +87,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
+    setOnSuperPower(false);
   }
   function resetGame() {
     setGameStartDate(null);
@@ -86,6 +96,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
     setAttempts(isEasyMode ? 3 : 1);
     setIsLeader(false);
+    setOnSuperPower(false);
+    setOnEpiphany(false);
+    setOnAlohomora(false);
   }
   function navigateHome() {
     navigate("/");
@@ -205,13 +218,45 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   // Обновляем значение таймера в интервале
   useEffect(() => {
+    if (gamePauseDate) {
+      return;
+    }
     const intervalId = setInterval(() => {
       setTimer(getTimerValue(gameStartDate, gameEndDate));
     }, 300);
     return () => {
       clearInterval(intervalId);
     };
-  }, [gameStartDate, gameEndDate]);
+  }, [gameStartDate, gameEndDate, gamePauseDate]);
+
+  function workEpiphany() {
+    setGamePauseDate(true);
+    setStatus(STATUS_PAUSE);
+
+    setTimeout(() => {
+      setStatus(STATUS_IN_PROGRESS);
+      setGamePauseDate(false);
+      let newDate = new Date(gameStartDate);
+      newDate.setSeconds(newDate.getSeconds() + 2);
+      setGameStartDate(newDate);
+    }, 2000);
+    clearTimeout();
+    setOnEpiphany(true);
+    setOnSuperPower(true);
+  }
+
+  function workAlohomora() {
+    const closeCards = cards.filter(card => !card.open);
+    const randomIndex = Math.floor(Math.random() * closeCards.length);
+    const randomCloseCard = closeCards[randomIndex];
+    setCards(
+      cards.map(card =>
+        randomCloseCard.rank === card.rank && randomCloseCard.suit === card.suit ? { ...card, open: true } : card,
+      ),
+    );
+    setOnSuperPower(true);
+    setOnAlohomora(true);
+  }
 
   return (
     <div className={styles.container}>
@@ -236,7 +281,37 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        {status === STATUS_IN_PROGRESS || status === STATUS_PAUSE ? (
+          <>
+            <div className={styles.superpower}>
+              <button
+                disabled={onEpiphany ? true : false}
+                className={styles.superpowerEpiphany_btn}
+                type="button"
+                onClick={workEpiphany}
+              >
+                <div className={styles.hintOne_wrap}>
+                  <h6 className={styles.hintOne_title}>Прозрение</h6>
+                  <p className={styles.hintOne_text}>
+                    На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                  </p>
+                </div>
+              </button>
+              <button
+                onClick={workAlohomora}
+                type="button"
+                className={styles.superpowerAlohomora_btn}
+                disabled={onAlohomora ? true : false}
+              >
+                <div className={styles.hintTwo_wrap}>
+                  <h6 className={styles.hintTwo_title}>Алохомора</h6>
+                  <p className={styles.hintTwo_text}>Открывается случайная пара карт.</p>
+                </div>
+              </button>
+            </div>
+            <Button onClick={resetGame}>Начать заново</Button>
+          </>
+        ) : null}
       </div>
 
       <div className={styles.cards}>
@@ -264,6 +339,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationMinutes={timer.minutes}
             onClick={navigateHome}
             isLeader={isLeader}
+            onSuperPower={onSuperPower}
           />
         </div>
       ) : null}
